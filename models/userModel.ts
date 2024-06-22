@@ -1,5 +1,5 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
-import bcrypt from 'bcrypt';
+import { Model, DataTypes, Sequelize } from "sequelize";
+import bcrypt from "bcrypt";
 
 export interface UserAttributes {
   id?: number;
@@ -46,15 +46,15 @@ export const UserModel = (sequelize: Sequelize): typeof User => {
     },
     {
       sequelize,
-      tableName: 'users',
-      timestamps: false,
+      tableName: "users",
+      timestamps: true,
       hooks: {
         beforeCreate: async (user: User) => {
           const hashedPassword = await bcrypt.hash(user.password, 10);
           user.password = hashedPassword;
         },
         beforeUpdate: async (user: User) => {
-          if (user.changed('password')) {
+          if (user.changed("password")) {
             const hashedPassword = await bcrypt.hash(user.password, 10);
             user.password = hashedPassword;
           }

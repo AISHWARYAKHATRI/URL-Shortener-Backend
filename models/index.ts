@@ -1,6 +1,7 @@
-import { Sequelize, DataTypes } from 'sequelize';
-import { UserModel } from './userModel';
-require('dotenv').config();
+import { Sequelize, DataTypes } from "sequelize";
+import { UserModel } from "./userModel";
+import { OtpModel } from "./otpModel";
+require("dotenv").config();
 
 // Initialize Sequelize instance
 const sequelize = new Sequelize(
@@ -9,7 +10,7 @@ const sequelize = new Sequelize(
   process.env.PASSWORD as string,
   {
     host: process.env.HOST as string,
-    dialect: 'mysql',
+    dialect: "mysql",
   }
 );
 
@@ -17,10 +18,10 @@ const sequelize = new Sequelize(
 sequelize
   .authenticate()
   .then(() => {
-    console.log('Connected to the database');
+    console.log("Connected to the database");
   })
   .catch((err: Error) => {
-    console.error('Unable to connect to the database:', err);
+    console.error("Unable to connect to the database:", err);
   });
 
 // Define the database object
@@ -32,5 +33,6 @@ db.Sequelize = Sequelize;
 
 // Import and initialize the userModel
 db.user = UserModel(sequelize);
+db.otp = OtpModel(sequelize);
 
 export default db;
